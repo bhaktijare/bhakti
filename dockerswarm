@@ -1,0 +1,15 @@
+web server 1
+sudo apt install swarm
+docker swarm init
+docker swarm join --token SWMTKN-1-6cebrvqzqwdg94726scpqw1qjdqwk5hopzk3ht6qfrll0uh9o3-62nyz93exgladjxh4w48tp6av 172.31.24.203:2377
+docker node ls
+web server 2
+sudo apt install swarm
+sudo docker swarm join --token SWMTKN-1-6cebrvqzqwdg94726scpqw1qjdqwk5hopzk3ht6qfrll0uh9o3-62nyz93exgladjxh4w48tp6av 172.31.24.203:2377
+###DOCKER SWARM
+docker build -t administrator2711/webdemo .
+docker login -u "administrator2711" -p "Admin@123"
+docker push administrator2711/webdemo
+ssh admin@13.201.131.121 "docker service ls | grep "mylcuster" && docker service rm "mycluster";
+docker service create --name "mycluster" --replicas 3 -p 80:80 administrator2711/webdemo "
+

@@ -1,0 +1,17 @@
+docker build -t administrator2711/webdemo .
+docker login -u "administrator2711" -p "Admin@123"
+docker push administrator2711/webdemo
+ssh admin@13.201.131.121 "
+docker rm -f webdemo &&
+docker rmi -f administrator2711/webdemo &&
+docker pull administrator2711/webdemo &&
+docker run -d --rm --name webdemo -p 80:80 administrator2711/webdemo "
+
+
+
+###DOCKER SWARM
+docker build -t administrator2711/webdemo .
+docker login -u "administrator2711" -p "Admin@123"
+docker push administrator2711/webdemo
+ssh admin@13.201.131.121 "docker service ls | grep "mylcuster" && docker service rm "mycluster";
+docker service create --name "mycluster" --replicas 3 -p 80:80 administrator2711/webdemo "
