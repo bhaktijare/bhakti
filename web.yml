@@ -47,3 +47,26 @@
         name: acl
         state: present
         update_cache: yes
+-----------------------------------------------------------------------------
+---
+- name: Install Apache webserver on VM2
+  hosts: web  # This refers to the webservers group from t>
+  become: yes  # This allows privilege escalation (sudo)
+  tasks:
+    - name: Install apache2
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Start apache2 service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+
+
+
+----------------------------------------------
+ansible-playbook -i inv.ini web.yml
