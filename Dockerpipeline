@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url:'https://github.com/bhaktijare/web26.git']])
+            }
+        }
+         stage('build') {
+            steps {
+                    sh 'docker build -t bhaktijare/demoproject .'         
+                    }
+        
+             }
+        stage('login') {
+            steps {
+                    sh 'docker login -u "bhaktijare" -p "Bhakti@0211"'      
+                    }
+        }
+        stage('push') {
+            steps {
+                    sh '''docker push bhaktijare/demoproject'''    
+                    }
+        }
+        stage('webserver') {
+            steps {
+                    sh '''ssh admin@54.82.93.89 "
+                    docker rm -f demoproject && 
+                    docker rmi -f bhaktijare/demoproject && 
+                    docker pull bhaktijare/demoproject && 
+                    docker run -d --rm --name demoproject -p 80:80 bhaktijare/demoproject"
+                    '''   
+                    }
+        }
+        
+    }
+}
+
