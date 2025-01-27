@@ -13,3 +13,7 @@ docker push administrator2711/webdemo
 ssh admin@13.201.131.121 "docker service ls | grep "mylcuster" && docker service rm "mycluster";
 docker service create --name "mycluster" --replicas 3 -p 80:80 administrator2711/webdemo "
 
+docker pull imagename
+docker images
+docker run -it  image name
+docker run -d --name apache2  -p 8080:80 ubuntu/apache2
